@@ -1,5 +1,11 @@
 # Altre Vie Website
 
-### Start Tailwind Watch Process
+## Tailwind commands
 
-npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
+### dev process
+
+npm run watch
+
+### build process
+
+npm run build
