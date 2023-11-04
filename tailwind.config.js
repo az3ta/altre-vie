@@ -7,8 +7,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        blu: "#386DC0",
-        rosso: "#CA2B2B",
+        blu: "#266CDB",
+        rosso: "#E22323",
       },
       fontFamily: {
         sans: ["Jost", ...defaultTheme.fontFamily.sans],

@@ -37,10 +37,10 @@ export class AboutSection extends HTMLElement {
           <!-- aside about -->
           <aside class="sticky top-0 flex-col items-center justify-between hidden md:w-1/3 lg:w-1/2 md:flex">
             <picture>
-              <img src="./img/img-1.jpg" alt="">
+              <img src="./img/img-about.webp" alt="About context image">
             </picture>
             <picture>
-              <img src="./img/arrow.jpg" alt="">
+              <img src="./icons/arrow.svg" alt="Arrow icon">
             </picture>
           </aside>
         </div>
