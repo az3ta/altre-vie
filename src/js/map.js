@@ -1,5 +1,5 @@
 const map_container = document.querySelector('.map-container');
-let device = true
+let device = false
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   // User is likely using a smartphone
   console.log("User is using a smartphone");
