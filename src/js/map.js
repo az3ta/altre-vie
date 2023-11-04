@@ -3,12 +3,12 @@ let device = false
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   // User is likely using a smartphone
   console.log("User is using a smartphone");
-  device = true
+  device = true;
 } else {
-  console.log('laptop');
+  console.log("laptop");
 }
 
-const bounds = map_container.getBoundingClientRect(map_container)
+const bounds = map_container.getBoundingClientRect(map_container);
 
 // Get the dimensions of the container and the viewport
 const containerWidth = bounds.width;
@@ -24,28 +24,27 @@ const centerY = (containerHeight - viewportHeight) / 2;
 map_container.scrollLeft = centerX;
 map_container.scrollTop = centerY;
 
-
 const numImages = 30;
 const imageWidth = 365; // Adjust this to the actual width of your images
 const imageHeight = 500; // Adjust this to the actual height of your images
 const maxAttempts = 100; // Maximum number of attempts to position an image
 
-const freeze_frames = []
+const freeze_frames = [];
 const placedCoordinates = new Set();
 
 // Function to handle the intersection
 function handleIntersection(entries) {
-  entries.forEach(entry => {
+  entries.forEach((entry) => {
     const centeredImage = entry.target;
     if (entry.isIntersecting) {
       // The image has entered the viewport
       // You can trigger your event here
-      centeredImage.style.backgroundColor = 'green'; // Change the background color for visualization
-      console.log('centering', centeredImage.currentSrc);
+      centeredImage.style.backgroundColor = "green"; // Change the background color for visualization
+      console.log("centering", centeredImage.currentSrc);
     } else {
-      centeredImage.style.backgroundColor = 'red'; // Change the background color for visualization
+      centeredImage.style.backgroundColor = "red"; // Change the background color for visualization
       // The image is not in the viewport
-      console.log('exit vieport');
+      console.log("exit vieport");
     }
   });
 }
@@ -55,20 +54,20 @@ function handleIntersection(entries) {
 
 for (let i = 0; i < placements.length; i++) {
   const placement = placements[i];
-  const media_container = document.createElement('div')
-  media_container.classList.add('media-container')
-  const video = document.createElement('video')
-  video.style.position = 'absolute'
-  const source = document.createElement('source');
+  const media_container = document.createElement("div");
+  media_container.classList.add("media-container");
+  const video = document.createElement("video");
+  video.style.position = "absolute";
+  const source = document.createElement("source");
   source.src = placement.animation;
-  video.loop
-  video.appendChild(source)
-  media_container.appendChild(video)
+  video.loop;
+  video.appendChild(source);
+  media_container.appendChild(video);
 
-  const audio = document.createElement('audio')
-  audio.src = placement.audio
-  audio.loop = true
-  media_container.appendChild(audio)
+  const audio = document.createElement("audio");
+  audio.src = placement.audio;
+  audio.loop = true;
+  media_container.appendChild(audio);
 
   // const observer = new IntersectionObserver(handleIntersection, {
   //   root: null,
@@ -79,46 +78,47 @@ for (let i = 0; i < placements.length; i++) {
 
   if (!device) {
     video.addEventListener("mouseover", () => {
-      audio.volume = 1
-      audio.play()
+      audio.volume = 1;
+      audio.play();
       video.play();
     });
 
     video.addEventListener("mouseout", () => {
       // audio.pause()
-      fadeOutAudio(audio)
+      fadeOutAudio(audio);
       video.pause();
       video.currentTime = 0;
-
     });
   } else {
-    video.addEventListener('touchstart', (e) => {
-      e.preventDefault()
-      audio.volume = 1
-      audio.play()
+    video.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      audio.volume = 1;
+      audio.play();
       video.play();
-    })
+    });
 
-    video.addEventListener('touchend', (e)=>{
-      e.preventDefault()
-      fadeOutAudio(audio)
+    video.addEventListener("touchend", (e) => {
+      e.preventDefault();
+      fadeOutAudio(audio);
       video.pause();
       video.currentTime = 0;
-    })
+    });
   }
   // image.classList.add('image');
 
   let attempts = 0;
   let randomX, randomY;
-  let overlap
+  let overlap;
   do {
-    randomX = 50 + Math.floor(Math.random() * (containerWidth - (imageWidth + 50)));
-    randomY = 150 + Math.floor(Math.random() * (containerHeight - (imageHeight + 200)));
+    randomX =
+      50 + Math.floor(Math.random() * (containerWidth - (imageWidth + 50)));
+    randomY =
+      150 + Math.floor(Math.random() * (containerHeight - (imageHeight + 200)));
     attempts++;
 
     // Check if the generated coordinates overlap with existing images
     overlap = false;
-    placedCoordinates.forEach(coord => {
+    placedCoordinates.forEach((coord) => {
       const [x, y] = coord;
       if (
         randomX < x + imageWidth &&
@@ -128,7 +128,7 @@ for (let i = 0; i < placements.length; i++) {
       ) {
         overlap = true;
       }
-    })
+    });
 
     if (!overlap) {
       placedCoordinates.add([randomX, randomY]);
@@ -136,16 +136,15 @@ for (let i = 0; i < placements.length; i++) {
   } while (overlap && attempts < maxAttempts);
 
   if (attempts >= maxAttempts) {
-    console.log('Failed to place an image without overlapping.');
+    console.log("Failed to place an image without overlapping.");
   } else {
     video.style.left = `${randomX}px`;
     video.style.top = `${randomY}px`;
-    video.style.width = rand_int(200, 500) + 'px'
-    video.style.maxHeight = '500px'
+    video.style.width = rand_int(200, 500) + "px";
+    video.style.maxHeight = "500px";
     map_container.appendChild(media_container);
   }
 }
-
 
 function rand_int(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -165,7 +164,7 @@ function fadeOutAudio(audio) {
       if (step >= steps) {
         clearInterval(fadeOutIntervalId);
         audio.pause();
-        console.log('audio paused');
+        console.log("audio paused");
       } else {
         audio.volume -= volumeStep;
         step++;
