@@ -1,49 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/dist/css/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/map.css">
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <!-- <script src="https://unpkg.com/freezeframe/dist/freezeframe.min.js"></script> -->
+  <script src="https://unpkg.com/freezeframe/dist/freezeframe.min.js"></script>
+  <script defer src="js/placements.js"></script>
+  <script defer src="js/map.js"></script>
   <title>Altre Vie</title>
 </head>
+
 <body class="" x-data="{ about: false }">
-  
+
   <header class="fixed flex justify-between w-full p-8">
     <h1 class="text-[#CA2B2B] text-[50px] font-bold">ALTRE VIE</h1>
     <menu class="flex gap-8">
-      <li class="font-bold  px-8 hover:bg-[#386DC0] hover:text-white p-2.5 rounded-full border-2 border-solid border-[#386DC0] text-[#386DC0] text-[40px]">
+      <li
+        class="font-bold  px-8 hover:bg-[#386DC0] hover:text-white p-2.5 rounded-full border-2 border-solid border-[#386DC0] text-[#386DC0] text-[40px]">
         <button @click="about = ! about">ABOUT</button>
       </li>
-      <li class="font-bold px-8  p-2.5 rounded-full border-2 border-solid border-[#C72D2D] hover:bg-[#C72D2D] hover:text-white text-[#C72D2D] text-[40px]"><a href="https://shop.antonellaruggiero.com/" target="_blank" rel="noopener noreferrer">SHOP</a></li>
+      <li
+        class="font-bold px-8  p-2.5 rounded-full border-2 border-solid border-[#C72D2D] hover:bg-[#C72D2D] hover:text-white text-[#C72D2D] text-[40px]">
+        <a href="https://shop.antonellaruggiero.com/" target="_blank" rel="noopener noreferrer">SHOP</a></li>
     </menu>
   </header>
-
+  
   <main class="w-screen h-screen">
+    <div class="map-container"></div>
     <!-- about -->
-    <section x-cloak class="fixed bottom-0 h-[calc(100%-148px)] w-full px-8 pb-8 " x-show="about" >
-      <div @click.outside="about = false" class="h-full bg-white/80 backdrop-blur text-5xl w-full flex gap-8 overflow-auto p-8 border-2 border-solid border-[#386DC0]">
+    <section x-cloak class="fixed bottom-0 h-[calc(100%-148px)] w-full px-8 pb-8 " x-show="about">
+      <div @click.outside="about = false"
+        class="h-full bg-white/80 backdrop-blur text-5xl w-full flex gap-8 overflow-auto p-8 border-2 border-solid border-[#386DC0]">
         <article class="flex flex-col gap-24 text-3xl text-[#386DC0] w-full md:w-1/2 pb-12">
           <div class="flex flex-col gap-12">
             <h2 class="text-5xl uppercase">About l'Album e il Libro</h2>
             <p>
-              Benvenuti nel meraviglioso mondo dell'artista eclettica Antonella, la cui nuova release, l'album "In Altre Vie," rappresenta un'esperienza unica che fonde la musica con la letteratura. Questo progetto unico è stato curato con passione e dedizione da Gabriele, un esperto del settore musicale e un ammiratore di lunga data di Antonella. Gabriele ha lavorato instancabilmente per dar vita a un album che racconta una storia speciale attraverso le note e le parole.
+              Benvenuti nel meraviglioso mondo dell'artista eclettica Antonella, la cui nuova release, l'album "In Altre
+              Vie," rappresenta un'esperienza unica che fonde la musica con la letteratura. Questo progetto unico è
+              stato curato con passione e dedizione da Gabriele, un esperto del settore musicale e un ammiratore di
+              lunga data di Antonella. Gabriele ha lavorato instancabilmente per dar vita a un album che racconta una
+              storia speciale attraverso le note e le parole.
             </p>
           </div>
 
           <div class="flex flex-col gap-12">
             <h3 class="uppercase text-[#C72D2D]">Il Ruolo di Sebastiano: Il Grafico Visionario</h3>
-            <p>La copertina dell'album, realizzata da Sebastiano, è un'opera d'arte visiva che cattura l'essenza dell'album. Il suo talento nel tradurre le emozioni e il messaggio di Antonella in un'immagine è sorprendente. L'arte visuale di Sebastiano non solo abbellisce il progetto, ma aggiunge un livello di profondità e comprensione all'opera complessiva.</p>
+            <p>La copertina dell'album, realizzata da Sebastiano, è un'opera d'arte visiva che cattura l'essenza
+              dell'album. Il suo talento nel tradurre le emozioni e il messaggio di Antonella in un'immagine è
+              sorprendente. L'arte visuale di Sebastiano non solo abbellisce il progetto, ma aggiunge un livello di
+              profondità e comprensione all'opera complessiva.</p>
           </div>
 
           <div class="flex flex-col gap-12">
             <h3 class="uppercase text-[#C72D2D]">Il Team di Progettisti dei Siti Web: Arianna, Andrea e Yann</h3>
-            <p>L'esperienza online è una parte fondamentale di "In Altre Vie". I siti web dedicati al progetto sono stati curati con cura da Arianna, Andrea e Yann, un trio di esperti in design e sviluppo web. Questi tre talentuosi progettisti hanno creato un ambiente online coinvolgente e interattivo che amplifica ulteriormente la connessione tra il pubblico e l'opera di Antonella.</p>
+            <p>L'esperienza online è una parte fondamentale di "In Altre Vie". I siti web dedicati al progetto sono
+              stati curati con cura da Arianna, Andrea e Yann, un trio di esperti in design e sviluppo web. Questi tre
+              talentuosi progettisti hanno creato un ambiente online coinvolgente e interattivo che amplifica
+              ulteriormente la connessione tra il pubblico e l'opera di Antonella.</p>
           </div>
 
           <div class="flex flex-col gap-12 pb-8">
             <h3 class="uppercase text-[#C72D2D]">L'Intreccio tra il Libro e il Sito Web</h3>
-            <p>L'aspetto più intrigante di questo progetto è la stretta connessione tra l'album e il libro. Le canzoni dell'album sono strettamente intrecciate con la trama del libro, creando un'esperienza coinvolgente che coinvolge sia l'udito che la lettura. Visitando il sito web dedicato, gli utenti possono esplorare ulteriormente il mondo di Antonella, accedere a contenuti esclusivi e immergersi nell'atmosfera unica del progetto.</p>
+            <p>L'aspetto più intrigante di questo progetto è la stretta connessione tra l'album e il libro. Le canzoni
+              dell'album sono strettamente intrecciate con la trama del libro, creando un'esperienza coinvolgente che
+              coinvolge sia l'udito che la lettura. Visitando il sito web dedicato, gli utenti possono esplorare
+              ulteriormente il mondo di Antonella, accedere a contenuti esclusivi e immergersi nell'atmosfera unica del
+              progetto.</p>
           </div>
         </article>
         <aside class="sticky top-0 flex-col items-center justify-between hidden w-1/2 md:flex">
@@ -58,13 +84,15 @@
     </section>
 
     <!-- content canvas -->
-    <section class="flex items-center justify-center w-full h-full">
+    <!-- <section class="flex items-center justify-center w-full h-full">
       <picture>
         <img src="./img/test-animation.webp" alt="">
       </picture>
-    </section>
+    </section> -->
+
 
   </main>
-  
+
 </body>
+
 </html>

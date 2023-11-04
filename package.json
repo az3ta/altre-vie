@@ -5,5 +5,8 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.3.5"
+  },
+  "dependencies": {
+    "freezeframe": "^5.0.2"
   }
 }
