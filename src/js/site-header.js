@@ -6,10 +6,19 @@ export class SiteHeader extends HTMLElement {
           ALTRE VIE
         </h1>
         <menu class="flex gap-2 md:gap-4 lg:gap-8">
-          <li class="px-5 md:px-8 hover:bg-blu hover:text-white p-2.5 rounded-full border-2 border-solid border-blu text-blu text-2xl sm:text-3xl md:text-4xl">
-            <button @click="about = ! about" type="button" role="button">
+          <li 
+            class="px-5 md:px-8 hover:bg-blu hover:text-white p-2.5 rounded-full border-2 border-solid border-blu text-blu text-2xl sm:text-3xl md:text-4xl"
+            :class="about ? 'bg-blu text-white' : ''"
+          >
+            <button 
+              @click="about = ! about" 
+              
+              type="button" 
+              role="button"
+            >
               <span class="block md:hidden">A</span>
-              <span class="hidden md:block">ABOUT</span>
+              <span 
+                class="hidden md:block">ABOUT</span>
             </button>
           </li>
           <li class="px-5 md:px-8 py-2.5 rounded-full border-2 border-solid border-rosso hover:bg-rosso hover:text-white text-rosso text-2xl sm:text-3xl  md:text-4xl">

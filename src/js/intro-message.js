@@ -15,7 +15,13 @@ export class IntroMessage extends HTMLElement {
               third
             </p>
           </div>
-          <button @click="intro = ! intro" type="button" role="button" class="text-blu text-center w-fit px-4 text-2xl md:text-3xl rounded-full  border-2 border-solid border-[#4795DA]">entra</button>
+          <button 
+            @click="intro = ! intro"
+            type="button" role="button"
+            class="text-blu hover:bg-blu hover:text-white text-center w-fit px-4 text-2xl md:text-3xl rounded-full  border-2 border-solid border-blu"
+          >
+            ENTRA
+          </button>
         </div>
       </div>
     `;
