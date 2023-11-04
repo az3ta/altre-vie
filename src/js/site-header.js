@@ -1,7 +1,7 @@
 export class SiteHeader extends HTMLElement {
   connectedCallback() {
     this.innerHTML = /*html*/ `
-      <header class="fixed flex items-baseline justify-between w-full p-4 font-bold sm:p-8">
+      <header class="fixed flex items-baseline justify-between w-full p-4 font-bold sm:p-8 z-40">
         <h1 class="text-3xl sm:text-4xl md:text-5xl text-rosso">
           ALTRE VIE
         </h1>
