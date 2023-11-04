@@ -1,5 +1,5 @@
 const map_container = document.querySelector('.map-container');
-let device = true
+let device = false
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   // User is likely using a smartphone
   console.log("User is using a smartphone");
@@ -24,155 +24,151 @@ const centerY = (containerHeight - viewportHeight) / 2;
 map_container.scrollLeft = centerX;
 map_container.scrollTop = centerY;
 
+function shuffle() {
+  map_container.innerHTML = ''
+  const imageWidth = 90; // Adjust this to the actual width of your images
+  const imageHeight = 125; // Adjust this to the actual height of your images
+  const maxAttempts = 100; // Maximum number of attempts to position an image
 
-const numImages = 30;
-const imageWidth = 365; // Adjust this to the actual width of your images
-const imageHeight = 500; // Adjust this to the actual height of your images
-const maxAttempts = 100; // Maximum number of attempts to position an image
+  const placedCoordinates = new Set();
 
-const freeze_frames = []
-const placedCoordinates = new Set();
+  for (let i = 0; i < placements.length; i++) {
+    const placement = placements[i];
+    const media_container = document.createElement('div')
+    media_container.classList.add('media-container')
+    const video = document.createElement('video')
+    video.style.position = 'absolute'
+    const source = document.createElement('source');
+    source.src = placement.animation;
+    video.loop
+    video.appendChild(source)
+    media_container.appendChild(video)
 
-// Function to handle the intersection
-function handleIntersection(entries) {
-  entries.forEach(entry => {
-    const centeredImage = entry.target;
-    if (entry.isIntersecting) {
-      // The image has entered the viewport
-      // You can trigger your event here
-      centeredImage.style.backgroundColor = 'green'; // Change the background color for visualization
-      console.log('centering', centeredImage.currentSrc);
+    const audio = document.createElement('audio')
+    audio.src = placement.audio
+    audio.loop = true
+    media_container.appendChild(audio)
+
+    // const observer = new IntersectionObserver(handleIntersection, {
+    //   root: null,
+    //   rootMargin: '-50% 50%',
+    //   threshold: 0,
+    // });
+    // observer.observe(video)
+
+    const color = placement.color
+
+    if (!device) {
+      video.addEventListener("mouseover", () => {
+        audio.volume = 1
+        audio.play()
+        video.play();
+        change_bg(color)
+      });
+
+      video.addEventListener("mouseout", () => {
+        // audio.pause()
+        fadeOutAudio(audio)
+        video.pause();
+        video.currentTime = 0;
+        reset_bg()
+
+      });
     } else {
-      centeredImage.style.backgroundColor = 'red'; // Change the background color for visualization
-      // The image is not in the viewport
-      console.log('exit vieport');
+      video.addEventListener('touchstart', (e) => {
+        e.preventDefault()
+        audio.volume = 1
+        audio.play()
+        video.play();
+        change_bg(color)
+      })
+
+      video.addEventListener('touchend', (e) => {
+        e.preventDefault()
+        fadeOutAudio(audio)
+        video.pause();
+        video.currentTime = 0;
+        reset_bg()
+      })
     }
-  });
-}
+    // image.classList.add('image');
 
-// Create an Intersection Observer
-// observer.observe(map_container)
+    let attempts = 0;
+    let randomX, randomY;
+    let overlap
+    do {
+      randomX = 50 + Math.floor(Math.random() * (containerWidth - (imageWidth + 50)));
+      randomY = imageHeight + Math.floor(Math.random() * (containerHeight - (imageHeight * 2)));
+      attempts++;
 
-for (let i = 0; i < placements.length; i++) {
-  const placement = placements[i];
-  const media_container = document.createElement('div')
-  media_container.classList.add('media-container')
-  const video = document.createElement('video')
-  video.style.position = 'absolute'
-  const source = document.createElement('source');
-  source.src = placement.animation;
-  video.loop
-  video.appendChild(source)
-  media_container.appendChild(video)
+      // Check if the generated coordinates overlap with existing images
+      overlap = false;
+      placedCoordinates.forEach(coord => {
+        const [x, y] = coord;
+        if (
+          randomX < x + imageWidth &&
+          randomX + imageWidth > x &&
+          randomY < y + imageHeight &&
+          randomY + imageHeight > y
+        ) {
+          overlap = true;
+        }
+      })
 
-  const audio = document.createElement('audio')
-  audio.src = placement.audio
-  audio.loop = true
-  media_container.appendChild(audio)
-
-  // const observer = new IntersectionObserver(handleIntersection, {
-  //   root: null,
-  //   rootMargin: '-50% 50%',
-  //   threshold: 0,
-  // });
-  // observer.observe(video)
-
-  if (!device) {
-    video.addEventListener("mouseover", () => {
-      audio.volume = 1
-      audio.play()
-      video.play();
-    });
-
-    video.addEventListener("mouseout", () => {
-      // audio.pause()
-      fadeOutAudio(audio)
-      video.pause();
-      video.currentTime = 0;
-
-    });
-  } else {
-    video.addEventListener('touchstart', (e) => {
-      e.preventDefault()
-      audio.volume = 1
-      audio.play()
-      video.play();
-    })
-
-    video.addEventListener('touchend', (e)=>{
-      e.preventDefault()
-      fadeOutAudio(audio)
-      video.pause();
-      video.currentTime = 0;
-    })
-  }
-  // image.classList.add('image');
-
-  let attempts = 0;
-  let randomX, randomY;
-  let overlap
-  do {
-    randomX = 50 + Math.floor(Math.random() * (containerWidth - (imageWidth + 50)));
-    randomY = 150 + Math.floor(Math.random() * (containerHeight - (imageHeight + 200)));
-    attempts++;
-
-    // Check if the generated coordinates overlap with existing images
-    overlap = false;
-    placedCoordinates.forEach(coord => {
-      const [x, y] = coord;
-      if (
-        randomX < x + imageWidth &&
-        randomX + imageWidth > x &&
-        randomY < y + imageHeight &&
-        randomY + imageHeight > y
-      ) {
-        overlap = true;
+      if (!overlap) {
+        placedCoordinates.add([randomX, randomY]);
       }
-    })
+    } while (overlap && attempts < maxAttempts);
 
-    if (!overlap) {
-      placedCoordinates.add([randomX, randomY]);
+    if (attempts >= maxAttempts) {
+      console.log('Failed to place an image without overlapping.');
+    } else {
+      video.style.left = `${randomX}px`;
+      video.style.top = `${randomY}px`;
+      video.style.width = rand_int(80, 150) + 'px'
+      video.style.maxHeight = '500px'
+      map_container.appendChild(media_container);
     }
-  } while (overlap && attempts < maxAttempts);
-
-  if (attempts >= maxAttempts) {
-    console.log('Failed to place an image without overlapping.');
-  } else {
-    video.style.left = `${randomX}px`;
-    video.style.top = `${randomY}px`;
-    video.style.width = rand_int(200, 500) + 'px'
-    video.style.maxHeight = '500px'
-    map_container.appendChild(media_container);
   }
 }
 
 
-function rand_int(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function fadeOutAudio(audio) {
-  if (!audio.paused) {
-    const fadeOutInterval = 10; // Time interval for volume reduction (in milliseconds)
-    const fadeOutDuration = 300; // Total duration of the fade-out effect (in milliseconds)
-    const initialVolume = audio.volume;
-    const steps = Math.ceil(fadeOutDuration / fadeOutInterval);
-    const volumeStep = initialVolume / steps;
-
-    let step = 0;
-
-    const fadeOutIntervalId = setInterval(() => {
-      if (step >= steps) {
-        clearInterval(fadeOutIntervalId);
-        audio.pause();
-        console.log('audio paused');
-      } else {
-        audio.volume -= volumeStep;
-        step++;
-      }
-    }, fadeOutInterval);
+  function rand_int(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+
+  function fadeOutAudio(audio) {
+    if (!audio.paused) {
+      const fadeOutInterval = 10; // Time interval for volume reduction (in milliseconds)
+      const fadeOutDuration = 300; // Total duration of the fade-out effect (in milliseconds)
+      const initialVolume = audio.volume;
+      const steps = Math.ceil(fadeOutDuration / fadeOutInterval);
+      const volumeStep = initialVolume / steps;
+
+      let step = 0;
+
+      const fadeOutIntervalId = setInterval(() => {
+        if (step >= steps) {
+          clearInterval(fadeOutIntervalId);
+          audio.pause();
+          console.log('audio paused');
+        } else {
+          audio.volume -= volumeStep;
+          step++;
+        }
+      }, fadeOutInterval);
+    }
+  }
+
+function change_bg(hex) {
+  document.body.style.backgroundColor = hex
 }
+
+function reset_bg() {
+  document.body.style.backgroundColor = 'white'
+}
+
+shuffle()
 
 // function isElementInCenter(element) {
 //   const rect = element.getBoundingClientRect();
