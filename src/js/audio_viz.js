@@ -37,7 +37,7 @@ function analyse_audio(audioElement) {
 
 function draw() {
   // clear()
-  background(255, 100)
+  background(255, 50)
   // Analyze the audio and get the frequency data
   if (audio_loaded) {
     analyser.getByteFrequencyData(dataArray);
@@ -57,14 +57,14 @@ function draw() {
       // const xRadius = pow(dataArray[i] / 255, exponent) * 200;
       // const yRadius = pow(dataArray[i] / 255, exponent) * 200;
 
-      const xRadius = map(dataArray[i], 0, 255, 50, 200);
-      const yRadius = map(dataArray[i], 0, 255, 200, 50);
+      const xRadius = map(dataArray[i], 0, 255, 50, width / 3.5);
+      const yRadius = map(dataArray[i], 0, 255, height / 3.5, 50);
 
       // Map the audio data to colors transitioning from red to blue
       const redValue = map(dataArray[i], 0, 255, 255, 0);
       const blueValue = map(dataArray[i], 0, 255, 0, 255);
 
-      stroke(redValue, 0, blueValue);
+      stroke(redValue, 0, blueValue, 30);
       const offset = map(i, 0, dataArray.length, 0, 360)
       createOrganicEllipse(centerX, centerY, xRadius * 3, yRadius * 3, 360, offset)
       t += 0.001;
@@ -88,4 +88,9 @@ function createOrganicEllipse(x, y, xRadius, yRadius, segments, offset) {
   }
 
   endShape(CLOSE);
+}
+
+function windowResized() {
+  // Resize the canvas when the window size changes
+  resizeCanvas(windowWidth, windowHeight);
 }
