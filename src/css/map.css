@@ -7,10 +7,19 @@
 
 .media-container{
   position: absolute;
+  user-select: none;
+  touch-action: none;
 }
 
 div.media-container video {
   max-height: 500px;
+  user-select: none;
+  touch-action: none;
+}
+
+div.media-container audio{
+  user-select: none;
+  touch-action: none;
 }
 
 #p5{
