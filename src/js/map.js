@@ -32,7 +32,6 @@ const maxAttempts = 100; // Maximum number of attempts to position an image
 const placedCoordinates = new Set();
 
 function init() {
-  // Start the loading process
   loadAudioAndAnimation(0);
 }
 
@@ -60,78 +59,100 @@ async function loadAudioAndAnimation(index) {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const media = audioContext.createMediaElementSource(audio);
 
-    processAudioAndAnimation(audio, audioContext, media, animation);
-    // Append the elements to the DOM or handle them as needed
-    element_placement(media_container, animation)
-    // map_container.appendChild(media_container);
 
-    // Process the loaded audio data and handle the elements as needed
-
-    // Continue loading the next entry if there are more
+    if (!device) {
+      processAudioAndAnimation(audio, audioContext, media, animation);
+      element_placement(media_container, animation)
+    } else {
+      processAudioAndAnimation_mobile(audio, audioContext, media, animation, media_container)
+      element_placement_mobile(media_container, animation)
+    }
     if (index < placements.length - 1) {
       const perc = Math.round((index / placements.length) * 100)
       console.log(`loaded ${perc}%`);
       loadAudioAndAnimation(index + 1);
+    } else {
+      console.log('all items loaded');
     }
   } catch (error) {
     console.error(`Error loading files: ${error}`);
   }
 }
 
-
+function processAudioAndAnimation_mobile(audio, audioctx, media, video, media_container) {
+  const observerOptions = {
+    root: null, // Use the viewport as the root
+    rootMargin: '0px', // No margin
+    threshold: 0.95, // When at least 50% of the target is visible
+  };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        activate(audio, video, audioctx, media)
+      } else {
+        deactivate(audio, video)
+      }
+    });
+  }, observerOptions);
+  observer.observe(media_container)
+}
 
 function processAudioAndAnimation(audio, audioctx, media, video) {
-
-
   if (!device) {
     video.addEventListener("mouseover", (e) => {
-      activate();
+      activate(audio, video, audioctx, media);
     });
 
     video.addEventListener("mouseout", (e) => {
-      deactivate();
+      deactivate(audio, video);
     });
   } else {
     video.addEventListener("touchstart", (e) => {
       e.preventDefault();
-      activate()
+      activate(audio, video, audioctx, media)
     });
 
     video.addEventListener("touchend", (e) => {
       e.preventDefault();
-      deactivate()
+      deactivate(audio, video)
     });
     video.addEventListener("mousedown", (e) => {
       e.preventDefault();
-      activate()
+      activate(audio, video, audioctx, media)
     });
 
     video.addEventListener("mouseup", (e) => {
       e.preventDefault();
-      deactivate()
+      deactivate(audio, video)
     });
   }
 
-  function deactivate() {
-    fadeOutAudio(audio);
-    // audio.pause()
-    video.pause();
-    video.currentTime = 0;
-    audio_loaded = false;
-  }
-
-  function activate() {
-    clearInterval(fadeOutIntervalId);
-    if (fade_out_audio !== null) { fade_out_audio.pause() }
-    audio.volume = 0.5;
-    analyse_audio(audioctx, media);
-    // console.log(audio);
-    audio.play();
-    video.play();
-  }
 }
 
-function element_placement(media_div, video) {
+function deactivate(audio, video) {
+  fadeOutAudio(audio);
+  video.pause();
+  video.currentTime = 0;
+  audio_loaded = false;
+}
+
+function activate(audio, video, audioctx, media) {
+  clearInterval(fadeOutIntervalId);
+  if (fade_out_audio !== null) { fade_out_audio.pause() }
+  audio.volume = 0.5;
+  analyse_audio(audioctx, media);
+  audio.play();
+  video.play();
+}
+
+
+function element_placement_mobile(media_div) {
+  media_div.style.width = rand_int(150, windowWidth - 50) + "px";
+  media_div.style.maxHeight = "500px";
+  map_container.appendChild(media_div);
+}
+
+function element_placement(media_div) {
   let attempts = 0;
   let randomX, randomY;
   let overlap;
@@ -174,15 +195,6 @@ function rand_int(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function load_audio(src, container, callback) {
-  const audio = new Audio(src);
-  audio.controls = false;
-  audio.loop = true
-  container.appendChild(audio);
-  if (typeof callback === 'function') {
-    callback(audio);
-  }
-}
 
 let fadeOutIntervalId = null
 let fade_out_audio = null
@@ -194,14 +206,11 @@ function fadeOutAudio(audio) {
     const initialVolume = audio.volume;
     const steps = Math.ceil(fadeOutDuration / fadeOutInterval);
     const volumeStep = initialVolume / steps;
-
     let step = 0;
-
     fadeOutIntervalId = setInterval(() => {
       if (step >= steps) {
         clearInterval(fadeOutIntervalId);
         audio.pause();
-        console.log("audio paused");
       } else {
         audio.volume -= volumeStep;
         step++;
@@ -209,3 +218,7 @@ function fadeOutAudio(audio) {
     }, fadeOutInterval);
   }
 }
+
+
+
+

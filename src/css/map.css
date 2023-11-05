@@ -7,20 +7,12 @@
 
 .media-container{
   position: absolute;
-  user-select: none;
-  touch-action: none;
 }
 
 div.media-container video {
   max-height: 500px;
-  user-select: none;
-  touch-action: none;
 }
 
-div.media-container audio{
-  user-select: none;
-  touch-action: none;
-}
 
 #p5{
   position: fixed;
@@ -32,4 +24,18 @@ div.media-container audio{
   width: 100%;
   height: 100%;
   position: absolute;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    width: 100%; /* Set the width to 100% for smaller screens */
+    height: auto;
+  }
+  .media-container{
+    position: relative;
+    display: flex;
+    height: 150vh;
+    margin: 80px auto 80px auto;
+    /* background-color: aquamarine; */
+  }
 }
