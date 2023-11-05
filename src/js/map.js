@@ -31,96 +31,6 @@ const maxAttempts = 100; // Maximum number of attempts to position an image
 
 const placedCoordinates = new Set();
 
-// for (let i = 0; i < placements.length; i++) {
-//   const placement = placements[i];
-//   const media_container = document.createElement("div");
-//   media_container.classList.add("media-container");
-//   const video = document.createElement("video");
-//   video.style.position = "absolute";
-//   const source = document.createElement("source");
-//   source.src = placement.animation;
-//   video.loop;
-//   video.appendChild(source);
-//   media_container.appendChild(video);
-
-//   // const audio = document.createElement("audio");
-//   // audio.src = placement.audio;
-//   // audio.loop = true;
-//   // media_container.appendChild(audio);
-
-//   load_audio(placement.audio, media_container, (audio) => {
-//     console.log(audio);
-//   })
-
-//   if (!device) {
-//     video.addEventListener("mouseover", (e) => {
-//       // audio.volume = 1;
-//       // audio.play();
-//       video.play();
-//     });
-
-//     video.addEventListener("mouseout", (e) => {
-//       // fadeOutAudio(audio);
-//       video.pause();
-//       video.currentTime = 0;
-//     });
-//   } else {
-//     video.addEventListener("touchstart", (e) => {
-//       e.preventDefault();
-//       audio.volume = 1;
-//       audio.play();
-//       video.play();
-//     });
-
-//     video.addEventListener("touchend", (e) => {
-//       e.preventDefault();
-//       fadeOutAudio(audio);
-//       video.pause();
-//       video.currentTime = 0;
-//     });
-//   }
-//   // image.classList.add('image');
-
-//   let attempts = 0;
-//   let randomX, randomY;
-//   let overlap;
-//   do {
-//     randomX =
-//       50 + Math.floor(Math.random() * (containerWidth - (imageWidth + 50)));
-//     randomY =
-//       150 + Math.floor(Math.random() * (containerHeight - (imageHeight + 200)));
-//     attempts++;
-
-//     // Check if the generated coordinates overlap with existing images
-//     overlap = false;
-//     placedCoordinates.forEach((coord) => {
-//       const [x, y] = coord;
-//       if (
-//         randomX < x + imageWidth &&
-//         randomX + imageWidth > x &&
-//         randomY < y + imageHeight &&
-//         randomY + imageHeight > y
-//       ) {
-//         overlap = true;
-//       }
-//     });
-
-//     if (!overlap) {
-//       placedCoordinates.add([randomX, randomY]);
-//     }
-//   } while (overlap && attempts < maxAttempts);
-
-//   if (attempts >= maxAttempts) {
-//     console.log("Failed to place an image without overlapping.");
-//   } else {
-//     video.style.left = `${randomX}px`;
-//     video.style.top = `${randomY}px`;
-//     video.style.width = rand_int(200, 500) + "px";
-//     video.style.maxHeight = "500px";
-//     map_container.appendChild(media_container);
-//   }
-// }
-
 
 async function loadAudioAndAnimation(index) {
   const audioFile = placements[index].audio;
@@ -129,11 +39,6 @@ async function loadAudioAndAnimation(index) {
   media_container.classList.add("media-container");
 
   try {
-    // Load the audio file using the Fetch API or any other method
-    // const audioResponse = await fetch(audioFile);
-    // const audioData = await audioResponse.arrayBuffer(); // Depending on the file type
-
-    // Create an audio element for the audio
     const audio = new Audio();
     audio.src = audioFile;
 
@@ -146,7 +51,10 @@ async function loadAudioAndAnimation(index) {
     media_container.appendChild(animation)
     media_container.appendChild(audio)
 
-    processAudioAndAnimation(audio, animation);
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const media = audioContext.createMediaElementSource(audio);
+
+    processAudioAndAnimation(audio, audioContext, media, animation);
     // Append the elements to the DOM or handle them as needed
     element_placement(media_container, animation)
     // map_container.appendChild(media_container);
@@ -167,7 +75,9 @@ async function loadAudioAndAnimation(index) {
 // Start the loading process
 loadAudioAndAnimation(0);
 
-function processAudioAndAnimation(audio, video) {
+function processAudioAndAnimation(audio, audioctx, media, video) {
+
+
   if (!device) {
     video.addEventListener("mouseover", (e) => {
       activate();
@@ -199,14 +109,18 @@ function processAudioAndAnimation(audio, video) {
 
   function deactivate() {
     fadeOutAudio(audio);
+    // audio.pause()
     video.pause();
     video.currentTime = 0;
     audio_loaded = false;
   }
 
   function activate() {
+    clearInterval(fadeOutIntervalId);
+    if(fade_out_audio !== null){fade_out_audio.pause()}
     audio.volume = 1;
-    analyse_audio(audio);
+    analyse_audio(audioctx, media);
+    // console.log(audio);
     audio.play();
     video.play();
   }
@@ -265,7 +179,10 @@ function load_audio(src, container, callback) {
   }
 }
 
+let fadeOutIntervalId = null
+let fade_out_audio = null
 function fadeOutAudio(audio) {
+  fade_out_audio = audio
   if (!audio.paused) {
     const fadeOutInterval = 10; // Time interval for volume reduction (in milliseconds)
     const fadeOutDuration = 300; // Total duration of the fade-out effect (in milliseconds)
@@ -275,7 +192,7 @@ function fadeOutAudio(audio) {
 
     let step = 0;
 
-    const fadeOutIntervalId = setInterval(() => {
+    fadeOutIntervalId = setInterval(() => {
       if (step >= steps) {
         clearInterval(fadeOutIntervalId);
         audio.pause();

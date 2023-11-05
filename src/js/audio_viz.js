@@ -16,14 +16,13 @@ function setup() {
   // analyse_audio();
 }
 
-function analyse_audio(audioElement) {
-  // audioElement = document.getElementById('audio');
-  audioContext = new (window.AudioContext || window.webkitAudioContext)();
+// let source = null
+let previous_source = null
+let source = null
 
-  // Connect the audio element to the audio context
-  const source = audioContext.createMediaElementSource(audioElement);
+// var MEDIA_ELEMENT_NODES = new WeakMap();
 
-  // Create an analyser node
+function analyse_audio(audioContext, source) {
   analyser = audioContext.createAnalyser();
   source.connect(analyser);
   analyser.connect(audioContext.destination);
