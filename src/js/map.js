@@ -31,6 +31,11 @@ const maxAttempts = 100; // Maximum number of attempts to position an image
 
 const placedCoordinates = new Set();
 
+function init() {
+  // Start the loading process
+  loadAudioAndAnimation(0);
+}
+
 
 async function loadAudioAndAnimation(index) {
   const audioFile = placements[index].audio;
@@ -72,8 +77,7 @@ async function loadAudioAndAnimation(index) {
   }
 }
 
-// Start the loading process
-loadAudioAndAnimation(0);
+
 
 function processAudioAndAnimation(audio, audioctx, media, video) {
 
@@ -117,7 +121,7 @@ function processAudioAndAnimation(audio, audioctx, media, video) {
 
   function activate() {
     clearInterval(fadeOutIntervalId);
-    if(fade_out_audio !== null){fade_out_audio.pause()}
+    if (fade_out_audio !== null) { fade_out_audio.pause() }
     audio.volume = 1;
     analyse_audio(audioctx, media);
     // console.log(audio);
@@ -204,25 +208,3 @@ function fadeOutAudio(audio) {
     }, fadeOutInterval);
   }
 }
-
-// function isElementInCenter(element) {
-//   const rect = element.getBoundingClientRect();
-//   const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-//   return rect.top <= viewportHeight / 2 && rect.bottom >= viewportHeight / 2;
-// }
-
-// window.addEventListener('scroll', function () {
-//   console.log('check');
-//   const media_containers = document.querySelectorAll('.media-container')
-//   for (let i = 0; i < media_containers.length; i++) {
-//     const image = media_containers[i]
-//     console.log(image);
-//     if (isElementInCenter(image)) {
-//       // The image is in the center of the screen
-//       // You can trigger your event here
-//       image.style.backgroundColor = 'green'; // Change the background color for visualization
-//     } else {
-//       image.style.backgroundColor = 'red'; // Reset the background color
-//     }
-//   }
-// });
