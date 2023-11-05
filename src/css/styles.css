@@ -658,6 +658,23 @@ video {
   animation: fade-left 1s both;
 }
 
+<<<<<<< HEAD
+=======
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-fade {
+  animation: fade 1s both;
+}
+
+>>>>>>> a92e24f (added animation to about)
 .flex-col {
   flex-direction: column;
 }
@@ -880,6 +897,17 @@ video {
   animation-duration: 1000ms;
 }
 
+<<<<<<< HEAD
+=======
+.animate-duration-\[2000ms\] {
+  animation-duration: 2000ms;
+}
+
+.animate-duration-\[1000ms\] {
+  animation-duration: 1000ms;
+}
+
+>>>>>>> a92e24f (added animation to about)
 .animate-fill-backwards {
   animation-fill-mode: backwards;
 }

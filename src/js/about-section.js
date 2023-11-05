@@ -10,7 +10,7 @@ export class AboutSection extends HTMLElement {
           @click.outside="about = false" 
           class="flex w-full h-full gap-4 scrollbar-hide p-4 overflow-auto text-3xl border-2 border-solid sm:text-4xl md:text-5xl md:gap-8 md:p-8 bg-white/80 backdrop-blur border-blu"
           >
-          <article class="flex flex-col w-full gap-16 text-3xl md:gap-24 md:w-2/3 xl:w-1/2">
+          <article class="flex flex-col w-full gap-16 text-3xl md:gap-24 md:w-2/3 xl:w-1/2 animate-fade animate-once animate-duration-1000 animate-delay-100 animate-ease-in animate-normal animate-fill-backwards">
             <h2 class="text-4xl md:text-5xl">Altrevie è una ricerca artistica a più voci che si sviluppa nel suono, nella carta e nel web. 
             </h2>
             <div class="flex flex-col gap-3 md:gap-6">
@@ -58,7 +58,7 @@ export class AboutSection extends HTMLElement {
           </article>
 
           <!-- aside about -->
-          <aside class="sticky top-0 flex-col items-center justify-between hidden md:w-1/3 xl:w-1/2 md:flex">
+          <aside class="sticky top-0 flex-col items-center justify-between hidden md:w-1/3 xl:w-1/2 md:flex animate-fade animate-once animate-duration-1000 animate-delay-[1100ms] animate-ease-in animate-normal animate-fill-backwards">
             <picture>
               <img src="./img/img-about.webp" alt="About context image">
             </picture>
