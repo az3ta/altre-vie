@@ -58,7 +58,7 @@ export class AboutSection extends HTMLElement {
           </article>
 
           <!-- aside about -->
-          <aside class="sticky top-0 flex-col items-center justify-between hidden md:w-1/3 xl:w-1/2 md:flex animate-fade animate-once animate-duration-1000 animate-delay-[1100ms] animate-ease-in animate-normal animate-fill-backwards">
+          <aside class="sticky top-0 flex-col items-center justify-between hidden md:w-1/3 xl:w-1/2 md:flex animate-fade animate-once animate-duration-1000 animate-delay-[1100ms] animate-ease-in animate-normal animate-fill-backwardsª">
             <picture>
               <img src="./img/img-about.webp" alt="About context image">
             </picture>
