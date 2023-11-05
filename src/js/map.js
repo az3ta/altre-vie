@@ -46,12 +46,13 @@ async function loadAudioAndAnimation(index) {
   try {
     const audio = new Audio();
     audio.src = audioFile;
-
+    audio.loop = true
     // Create a video element for the animation
     const animation = document.createElement('video');
     animation.src = animationFile;
     animation.controls = false; // Add controls to play the animation
     animation.autoplay = false; // Set autoplay as per your needs
+    animation.loop = true
 
     media_container.appendChild(animation)
     media_container.appendChild(audio)
@@ -122,7 +123,7 @@ function processAudioAndAnimation(audio, audioctx, media, video) {
   function activate() {
     clearInterval(fadeOutIntervalId);
     if (fade_out_audio !== null) { fade_out_audio.pause() }
-    audio.volume = 1;
+    audio.volume = 0.5;
     analyse_audio(audioctx, media);
     // console.log(audio);
     audio.play();
