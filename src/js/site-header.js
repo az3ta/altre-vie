@@ -7,8 +7,8 @@ export class SiteHeader extends HTMLElement {
         </h1>
         <menu class="flex gap-2 md:gap-4 lg:gap-8">
           <li 
-            class="px-5 md:px-8 hover:bg-blu bg-white/90 hover:text-white p-2.5 rounded-full border-2 border-solid border-blu text-blu text-2xl sm:text-3xl md:text-4xl"
-            :class="about ? 'bg-blu/100 text-white' : ''"
+            class="px-5 md:px-8 hover:bg-blu  hover:text-white p-2.5 rounded-full border-2 border-solid border-blu  text-2xl sm:text-3xl md:text-4xl"
+            :class="about ? 'bg-blu text-white' : 'bg-white/90 text-blu'"
           >
             <button 
               @click="about = ! about" 
