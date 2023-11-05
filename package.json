@@ -1,9 +1,13 @@
 {
   "scripts": {
-    "watch": "npx tailwindcss -i ./src/css/tailwind.css -o ./dist/css/styles.css -w",
-    "build": "npx tailwindcss -i ./src/css/tailwind.css -o ./dist/css/styles.css -m"
+    "watch": "npx tailwindcss -i ./src/css/tailwind.css -o ./src/css/styles.css -w",
+    "build": "npx tailwindcss -i ./src/css/tailwind.css -o ./src/css/styles.css -m"
   },
   "devDependencies": {
     "tailwindcss": "^3.3.5"
+  },
+  "dependencies": {
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "tailwindcss-animated": "^1.0.1"
   }
 }
