@@ -29,91 +29,196 @@ const imageWidth = 365; // Adjust this to the actual width of your images
 const imageHeight = 500; // Adjust this to the actual height of your images
 const maxAttempts = 100; // Maximum number of attempts to position an image
 
-const freeze_frames = [];
 const placedCoordinates = new Set();
 
-// Function to handle the intersection
-function handleIntersection(entries) {
-  entries.forEach((entry) => {
-    const centeredImage = entry.target;
-    if (entry.isIntersecting) {
-      // The image has entered the viewport
-      // You can trigger your event here
-      centeredImage.style.backgroundColor = "green"; // Change the background color for visualization
-      console.log("centering", centeredImage.currentSrc);
-    } else {
-      centeredImage.style.backgroundColor = "red"; // Change the background color for visualization
-      // The image is not in the viewport
-      console.log("exit vieport");
-    }
-  });
-}
+// for (let i = 0; i < placements.length; i++) {
+//   const placement = placements[i];
+//   const media_container = document.createElement("div");
+//   media_container.classList.add("media-container");
+//   const video = document.createElement("video");
+//   video.style.position = "absolute";
+//   const source = document.createElement("source");
+//   source.src = placement.animation;
+//   video.loop;
+//   video.appendChild(source);
+//   media_container.appendChild(video);
 
-// Create an Intersection Observer
-// observer.observe(map_container)
+//   // const audio = document.createElement("audio");
+//   // audio.src = placement.audio;
+//   // audio.loop = true;
+//   // media_container.appendChild(audio);
 
-for (let i = 0; i < placements.length; i++) {
-  const placement = placements[i];
+//   load_audio(placement.audio, media_container, (audio) => {
+//     console.log(audio);
+//   })
+
+//   if (!device) {
+//     video.addEventListener("mouseover", (e) => {
+//       // audio.volume = 1;
+//       // audio.play();
+//       video.play();
+//     });
+
+//     video.addEventListener("mouseout", (e) => {
+//       // fadeOutAudio(audio);
+//       video.pause();
+//       video.currentTime = 0;
+//     });
+//   } else {
+//     video.addEventListener("touchstart", (e) => {
+//       e.preventDefault();
+//       audio.volume = 1;
+//       audio.play();
+//       video.play();
+//     });
+
+//     video.addEventListener("touchend", (e) => {
+//       e.preventDefault();
+//       fadeOutAudio(audio);
+//       video.pause();
+//       video.currentTime = 0;
+//     });
+//   }
+//   // image.classList.add('image');
+
+//   let attempts = 0;
+//   let randomX, randomY;
+//   let overlap;
+//   do {
+//     randomX =
+//       50 + Math.floor(Math.random() * (containerWidth - (imageWidth + 50)));
+//     randomY =
+//       150 + Math.floor(Math.random() * (containerHeight - (imageHeight + 200)));
+//     attempts++;
+
+//     // Check if the generated coordinates overlap with existing images
+//     overlap = false;
+//     placedCoordinates.forEach((coord) => {
+//       const [x, y] = coord;
+//       if (
+//         randomX < x + imageWidth &&
+//         randomX + imageWidth > x &&
+//         randomY < y + imageHeight &&
+//         randomY + imageHeight > y
+//       ) {
+//         overlap = true;
+//       }
+//     });
+
+//     if (!overlap) {
+//       placedCoordinates.add([randomX, randomY]);
+//     }
+//   } while (overlap && attempts < maxAttempts);
+
+//   if (attempts >= maxAttempts) {
+//     console.log("Failed to place an image without overlapping.");
+//   } else {
+//     video.style.left = `${randomX}px`;
+//     video.style.top = `${randomY}px`;
+//     video.style.width = rand_int(200, 500) + "px";
+//     video.style.maxHeight = "500px";
+//     map_container.appendChild(media_container);
+//   }
+// }
+
+
+async function loadAudioAndAnimation(index) {
+  const audioFile = placements[index].audio;
+  const animationFile = placements[index].animation;
   const media_container = document.createElement("div");
   media_container.classList.add("media-container");
-  const video = document.createElement("video");
-  video.style.position = "absolute";
-  const source = document.createElement("source");
-  source.src = placement.animation;
-  video.loop;
-  video.appendChild(source);
-  media_container.appendChild(video);
 
-  const audio = document.createElement("audio");
-  audio.src = placement.audio;
-  audio.loop = true;
-  media_container.appendChild(audio);
+  try {
+    // Load the audio file using the Fetch API or any other method
+    // const audioResponse = await fetch(audioFile);
+    // const audioData = await audioResponse.arrayBuffer(); // Depending on the file type
 
-  // const observer = new IntersectionObserver(handleIntersection, {
-  //   root: null,
-  //   rootMargin: '-50% 50%',
-  //   threshold: 0,
-  // });
-  // observer.observe(video)
+    // Create an audio element for the audio
+    const audio = new Audio();
+    audio.src = audioFile;
 
+    // Create a video element for the animation
+    const animation = document.createElement('video');
+    animation.src = animationFile;
+    animation.controls = false; // Add controls to play the animation
+    animation.autoplay = false; // Set autoplay as per your needs
+
+    media_container.appendChild(animation)
+    media_container.appendChild(audio)
+
+    processAudioAndAnimation(audio, animation);
+    // Append the elements to the DOM or handle them as needed
+    element_placement(media_container, animation)
+    // map_container.appendChild(media_container);
+
+    // Process the loaded audio data and handle the elements as needed
+
+    // Continue loading the next entry if there are more
+    if (index < placements.length - 1) {
+      const perc = Math.round((index / placements.length) * 100)
+      console.log(`loaded ${perc}%`);
+      loadAudioAndAnimation(index + 1);
+    }
+  } catch (error) {
+    console.error(`Error loading files: ${error}`);
+  }
+}
+
+// Start the loading process
+loadAudioAndAnimation(0);
+
+function processAudioAndAnimation(audio, video) {
   if (!device) {
-    video.addEventListener("mouseover", () => {
-      audio.volume = 1;
-      audio.play();
-      video.play();
+    video.addEventListener("mouseover", (e) => {
+      activate();
     });
 
-    video.addEventListener("mouseout", () => {
-      // audio.pause()
-      fadeOutAudio(audio);
-      video.pause();
-      video.currentTime = 0;
+    video.addEventListener("mouseout", (e) => {
+      deactivate();
     });
   } else {
     video.addEventListener("touchstart", (e) => {
       e.preventDefault();
-      audio.volume = 1;
-      audio.play();
-      video.play();
+      activate()
     });
 
     video.addEventListener("touchend", (e) => {
       e.preventDefault();
-      fadeOutAudio(audio);
-      video.pause();
-      video.currentTime = 0;
+      deactivate()
+    });
+    video.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      activate()
+    });
+
+    video.addEventListener("mouseup", (e) => {
+      e.preventDefault();
+      deactivate()
     });
   }
-  // image.classList.add('image');
 
+  function deactivate() {
+    fadeOutAudio(audio);
+    video.pause();
+    video.currentTime = 0;
+    audio_loaded = false;
+  }
+
+  function activate() {
+    audio.volume = 1;
+    analyse_audio(audio);
+    audio.play();
+    video.play();
+  }
+}
+
+function element_placement(media_div, video) {
   let attempts = 0;
   let randomX, randomY;
   let overlap;
   do {
-    randomX =
-      50 + Math.floor(Math.random() * (containerWidth - (imageWidth + 50)));
-    randomY =
-      150 + Math.floor(Math.random() * (containerHeight - (imageHeight + 200)));
+    randomX = 50 + Math.floor(Math.random() * (containerWidth - (imageWidth + 50)));
+    randomY = 150 + Math.floor(Math.random() * (containerHeight - (imageHeight + 200)));
     attempts++;
 
     // Check if the generated coordinates overlap with existing images
@@ -138,16 +243,26 @@ for (let i = 0; i < placements.length; i++) {
   if (attempts >= maxAttempts) {
     console.log("Failed to place an image without overlapping.");
   } else {
-    video.style.left = `${randomX}px`;
-    video.style.top = `${randomY}px`;
-    video.style.width = rand_int(200, 500) + "px";
-    video.style.maxHeight = "500px";
-    map_container.appendChild(media_container);
+    media_div.style.left = `${randomX}px`;
+    media_div.style.top = `${randomY}px`;
+    media_div.style.width = rand_int(200, 500) + "px";
+    media_div.style.maxHeight = "500px";
+    map_container.appendChild(media_div);
   }
 }
 
 function rand_int(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function load_audio(src, container, callback) {
+  const audio = new Audio(src);
+  audio.controls = false;
+  audio.loop = true
+  container.appendChild(audio);
+  if (typeof callback === 'function') {
+    callback(audio);
+  }
 }
 
 function fadeOutAudio(audio) {
