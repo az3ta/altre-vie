@@ -20,6 +20,7 @@ export class AboutSection extends HTMLElement {
               <br/>
               Insieme riversano, scompongo e ricompongono la voce del primo lavoro solista di Antonella Ruggiero: “Libera” (1996). Di Roberto Colombo le musiche originali che accompagnano il nuovo canto. 
               </p>
+              <img src="./img/cover.jpg" />
             </div>
 
             <div class="flex flex-col gap-3 md:gap-6">
@@ -27,11 +28,11 @@ export class AboutSection extends HTMLElement {
               <p>
                 Il lavoro grafico è frutto di un incontro di interessi tra il collettivo <b>Libri Finti Clandestini</b> e Antonella Ruggiero, uniti dall’amore per i libri d’epoca e per il riuso. Esplorando 110 titoli provenienti dalla collezione personale di Antonella, alcuni dei quali risalenti a più di un secolo fa, il collettivo ha composto il mondo visivo di Altrevie.
               </p>
-              img
+              <img src="./img/about_2.jpg" />
               <p>
               Oltre al formato CD, il collettivo milanese Libri Finti Clandestini, in collaborazione con <b>5X Letterpress</b>, ha prodotto un’opera di editoria d’arte in tiratura limitata: un peep-show, supporto cartaceo apribile a fisarmonica dotato di spiraglio, all’interno del quale è possibile spiare il mondo sconosciuto di Altrevie. 
               </p>
-              img
+              <img src="./img/about_3.jpg" />
             </div>
 
             <div class="flex flex-col gap-3 md:gap-6">

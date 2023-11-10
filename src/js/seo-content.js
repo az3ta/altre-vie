@@ -17,14 +17,14 @@ export class SeoContent extends HTMLElement {
     <meta property="og:url" content="https://metatags.io/" />
     <meta property="og:title" content="Altrevie - Antonella Ruggiero" />
     <meta property="og:description" content="Sito dedicato ad Altrevie, album musicale di Antonella Ruggiero e Roberto Colombo" />
-    <meta property="og:image" content="/img/cover.jpg" />
+    <meta property="og:image" content="./img/cover.jpg" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://metatags.io/" />
     <meta property="twitter:title" content="Altrevie - Antonella Ruggiero" />
     <meta property="twitter:description" content="Sito dedicato ad Altrevie, album musicale di Antonella Ruggiero e Roberto Colombo" />
-    <meta property="twitter:image" content="/img/cover.jpg" />
+    <meta property="twitter:image" content="./img/cover.jpg" />
     `;
   }
 }
