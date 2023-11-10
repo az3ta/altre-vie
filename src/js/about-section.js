@@ -20,6 +20,7 @@ export class AboutSection extends HTMLElement {
               <br/>
               Insieme riversano, scompongo e ricompongono la voce del primo lavoro solista di Antonella Ruggiero: “Libera” (1996). Di Roberto Colombo le musiche originali che accompagnano il nuovo canto. 
               </p>
+              <img src="./img/cover.jpg" />
             </div>
 
             <div class="flex flex-col gap-3 md:gap-6">
@@ -27,11 +28,11 @@ export class AboutSection extends HTMLElement {
               <p>
                 Il lavoro grafico è frutto di un incontro di interessi tra il collettivo <b>Libri Finti Clandestini</b> e Antonella Ruggiero, uniti dall’amore per i libri d’epoca e per il riuso. Esplorando 110 titoli provenienti dalla collezione personale di Antonella, alcuni dei quali risalenti a più di un secolo fa, il collettivo ha composto il mondo visivo di Altrevie.
               </p>
-              img
+              <img src="./img/about_2.jpg" />
               <p>
               Oltre al formato CD, il collettivo milanese Libri Finti Clandestini, in collaborazione con <b>5X Letterpress</b>, ha prodotto un’opera di editoria d’arte in tiratura limitata: un peep-show, supporto cartaceo apribile a fisarmonica dotato di spiraglio, all’interno del quale è possibile spiare il mondo sconosciuto di Altrevie. 
               </p>
-              img
+              <img src="./img/about_3.jpg" />
             </div>
 
             <div class="flex flex-col gap-3 md:gap-6">
@@ -44,15 +45,8 @@ export class AboutSection extends HTMLElement {
             </div>
 
             <div class="flex flex-col gap-3 pb-8 md:gap-6">
-              <h3 class="text-3xl uppercase md:text-4xl text-rosso">Un Post-Disco?</h3>
               <p>
-              Questa ricerca a più voci prende le mosse dalla curiosità di esplorare delle alternative possibili ai supporti musicali tradizionali, come il vinile o il CD, in un panorama dove la musica viene fruita principalmente via streaming. 
-              <br/>
-              L’obiettivo è quello di indagare una diversa modalità di fruizione musicale a livello sia fisico che digitale, progettando un supporto fisico “su misura” per la musica di Altrevie e il mondo immaginario che invita a esplorare. 
-              <br/>
-              Il peep-show, supporto fisico che permette di spiare dentro il mondo di Altrevie, è collegato tramite QR-code alla musica dell’omonimo album di Antonella Ruggiero, i cui canti animano e abitano questo stesso mondo. 
-              <br/>
-              Ricerca, co-progettazione e realizzazione del prototipo peep-show e del sito di Altrevie sono state cofinanziate dal European Union's Single Market Programme nell'ambito del progetto "Post-Disco-Graphy" di Gabriele Colombo.
+              Ricerca, co-progettazione e realizzazione del prototipo di “peep-show” e del sito dedicato di Altrevie sono state cofinanziate dal European Union's Single Market Programme nell'ambito del progetto "Post-Disco-Graphy" di Gabriele Colombo.
               </p>
             </div>
           </article>
