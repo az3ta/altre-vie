@@ -568,12 +568,12 @@ video {
   }
 }
 
-.fixed {
-  position: fixed;
+.visible {
+  visibility: visible;
 }
 
-.absolute {
-  position: absolute;
+.fixed {
+  position: fixed;
 }
 
 .sticky {
@@ -698,14 +698,6 @@ video {
 
 .overflow-auto {
   overflow: auto;
-}
-
-.overflow-scroll {
-  overflow: scroll;
-}
-
-.overflow-x-scroll {
-  overflow-x: scroll;
 }
 
 .rounded-full {
