@@ -33,8 +33,13 @@ const placedCoordinates = new Set();
 
 function init() {
   loadAudioAndAnimation(0);
+  const button = document.querySelector('#entra')
+  button.textContent = 'LOADING...'
 }
 
+let loaded_items = 0
+let data_loaded = false
+console.log(placements.length);
 
 async function loadAudioAndAnimation(index) {
   const audioFile = placements[index].audio;
@@ -46,12 +51,24 @@ async function loadAudioAndAnimation(index) {
     const audio = new Audio();
     audio.src = audioFile;
     audio.loop = true
+    audio.onloadeddata = () => {
+      // console.log(`${audioFile}, lodade`);
+    }
     // Create a video element for the animation
     const animation = document.createElement('video');
     animation.src = animationFile;
     animation.controls = false; // Add controls to play the animation
     animation.autoplay = false; // Set autoplay as per your needs
     animation.loop = true
+    animation.onloadeddata = () => {
+      // console.log(`${animationFile}, loaded`);
+      loaded_items++
+      console.log(loaded_items, loaded_items === placements.length);
+      if(loaded_items === placements.length){
+        const intro = document.querySelector('#introMessage')
+        intro.style.display = 'none'
+      }
+    }
 
     media_container.appendChild(animation)
     media_container.appendChild(audio)
