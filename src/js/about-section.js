@@ -45,15 +45,8 @@ export class AboutSection extends HTMLElement {
             </div>
 
             <div class="flex flex-col gap-3 pb-8 md:gap-6">
-              <h3 class="text-3xl uppercase md:text-4xl text-rosso">Un Post-Disco?</h3>
               <p>
-              Questa ricerca a più voci prende le mosse dalla curiosità di esplorare delle alternative possibili ai supporti musicali tradizionali, come il vinile o il CD, in un panorama dove la musica viene fruita principalmente via streaming. 
-              <br/>
-              L’obiettivo è quello di indagare una diversa modalità di fruizione musicale a livello sia fisico che digitale, progettando un supporto fisico “su misura” per la musica di Altrevie e il mondo immaginario che invita a esplorare. 
-              <br/>
-              Il peep-show, supporto fisico che permette di spiare dentro il mondo di Altrevie, è collegato tramite QR-code alla musica dell’omonimo album di Antonella Ruggiero, i cui canti animano e abitano questo stesso mondo. 
-              <br/>
-              Ricerca, co-progettazione e realizzazione del prototipo peep-show e del sito di Altrevie sono state cofinanziate dal European Union's Single Market Programme nell'ambito del progetto "Post-Disco-Graphy" di Gabriele Colombo.
+              Ricerca, co-progettazione e realizzazione del prototipo di “peep-show” e del sito dedicato di Altrevie sono state cofinanziate dal European Union's Single Market Programme nell'ambito del progetto "Post-Disco-Graphy" di Gabriele Colombo.
               </p>
             </div>
           </article>
