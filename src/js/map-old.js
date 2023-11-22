@@ -20,6 +20,10 @@ const containerHeight = bounds.height;
 const viewportWidth = window.innerWidth;
 const viewportHeight = window.innerHeight;
 
+// global audio
+const audio_elements = [];
+const video_elements = [];
+
 // Calculate the center position
 const centerX = (containerWidth - viewportWidth) / 2;
 const centerY = (containerHeight - viewportHeight) / 2;
@@ -36,14 +40,56 @@ const maxAttempts = 100; // Maximum number of attempts to position an image
 const placedCoordinates = new Set();
 
 function init() {
-  loadAudioAndAnimation(0);
-  const button = document.querySelector("#entra");
-  button.textContent = "LOADING...";
+  // loadAudioAndAnimation(0);
+  // const button = document.querySelector('#entra')
+  // button.textContent = 'LOADING...'
+
+  const media_elements = document.querySelectorAll(".media-container");
+  for (let i = 0; i < media_elements.length; i++) {
+    const media = media_elements[i];
+    const video = media.querySelector("video");
+    const audio = media.querySelector("audio");
+    console.log(video, audio);
+    const audioContext = new (window.AudioContext ||
+      window.webkitAudioContext)();
+    const media_el = audioContext.createMediaElementSource(audio);
+    if (!device) {
+      video.addEventListener("mouseover", (e) => {
+        activate(audio, video, audioContext, media_el);
+      });
+
+      video.addEventListener("mouseout", (e) => {
+        deactivate(audio, video);
+      });
+    } else {
+      media.style.width = rand_int(150, window.innerWidth - 50) + "px";
+      media.style.maxHeight = "500px";
+      media.style.left = "0px";
+      media.style.top = "0px";
+      const observerOptions = {
+        root: null, // Use the viewport as the root
+        rootMargin: "0px", // No margin
+        threshold: 0.95, // When at least 50% of the target is visible
+      };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            console.log("activate");
+            activate(audio, video, audioContext, media_el);
+          } else {
+            console.log("deactivate");
+            deactivate(audio, video);
+          }
+        });
+      }, observerOptions);
+      observer.observe(media);
+    }
+  }
 }
 
-let loaded_items = 0;
+let loaded_items_audio = 0;
+let loaded_items_video = 0;
 let data_loaded = false;
-console.log(placements.length);
 
 async function loadAudioAndAnimation(index) {
   const audioFile = placements[index].audio;
@@ -53,26 +99,44 @@ async function loadAudioAndAnimation(index) {
 
   try {
     const audio = new Audio();
+    // console.log(window.location, audioFile);
     audio.src = audioFile;
     audio.loop = true;
-    audio.onloadeddata = () => {
-      // console.log(`${audioFile}, lodade`);
-    };
+    audio_elements.push(audio);
+    // audio.onloadeddata = () => {
+    //   loaded_items_audio++
+    //   const perc = Math.round((loaded_items_audio / placements.length) * 100)
+    //   // console.log(`audio loading: ${perc}%`);
+    //   // console.log(loaded_items_video === placements.length && loaded_items_audio === placements.length);
+    //   if (loaded_items_video === placements.length && loaded_items_audio === placements.length) {
+    //     const intro = document.querySelector('#introMessage')
+    //     intro.style.display = 'none'
+    //   }
+    // }
     // Create a video element for the animation
     const animation = document.createElement("video");
-    animation.src = animationFile;
+    const source = document.createElement("source");
+    source.src = animationFile;
+    source.type = "video/mp4";
+    animation.appendChild(source);
+    animation.preload = "auto";
+    animation.setAttribute("muted", "true");
     animation.controls = false; // Add controls to play the animation
-    animation.autoplay = false; // Set autoplay as per your needs
     animation.loop = true;
-    animation.onloadeddata = () => {
-      // console.log(`${animationFile}, loaded`);
-      loaded_items++;
-      console.log(loaded_items, loaded_items === placements.length);
-      if (loaded_items === placements.length) {
-        const intro = document.querySelector("#introMessage");
-        intro.style.display = "none";
-      }
+    animation.onprogress = (event) => {
+      // console.log(event);
     };
+    // animation.onloadeddata = () => {
+    //   loaded_items_video++
+    //   const perc = Math.round((loaded_items_video / placements.length) * 100)
+    //   // console.log(`video loading: ${perc}%`);
+    //   // console.log(loaded_items_video === placements.length && loaded_items_audio === placements.length);
+    //   if (loaded_items_video === placements.length && loaded_items_audio === placements.length) {
+    //     const intro = document.querySelector('#introMessage')
+    //     intro.style.display = 'none'
+    //   }
+    // }
+    video_elements.push(animation);
 
     media_container.appendChild(animation);
     media_container.appendChild(audio);
@@ -95,8 +159,6 @@ async function loadAudioAndAnimation(index) {
       element_placement_mobile(media_container, animation);
     }
     if (index < placements.length - 1) {
-      const perc = Math.round((index / placements.length) * 100);
-      console.log(`loaded ${perc}%`);
       loadAudioAndAnimation(index + 1);
     } else {
       console.log("all items loaded");
@@ -139,30 +201,37 @@ function processAudioAndAnimation(audio, audioctx, media, video) {
     video.addEventListener("mouseout", (e) => {
       deactivate(audio, video);
     });
-  } else {
-    video.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      activate(audio, video, audioctx, media);
-    });
-
-    video.addEventListener("touchend", (e) => {
-      e.preventDefault();
-      deactivate(audio, video);
-    });
-    video.addEventListener("mousedown", (e) => {
-      e.preventDefault();
-      activate(audio, video, audioctx, media);
-    });
-
-    video.addEventListener("mouseup", (e) => {
-      e.preventDefault();
-      deactivate(audio, video);
-    });
   }
+  // else {
+  //   video.addEventListener("touchstart", (e) => {
+  //     e.preventDefault();
+  //     activate(audio, video, audioctx, media)
+  //   });
+
+  //   video.addEventListener("touchend", (e) => {
+  //     e.preventDefault();
+  //     deactivate(audio, video)
+  //   });
+  //   video.addEventListener("mousedown", (e) => {
+  //     e.preventDefault();
+  //     activate(audio, video, audioctx, media)
+  //   });
+
+  //   video.addEventListener("mouseup", (e) => {
+  //     e.preventDefault();
+  //     deactivate(audio, video)
+  //   });
+  // }
 }
 
 function deactivate(audio, video) {
-  fadeOutAudio(audio);
+  if (!device) {
+    fadeOutAudio(audio);
+  } else {
+    audio.pause();
+    global_audio_pause();
+  }
+  global_video_pause();
   video.pause();
   video.currentTime = 0;
   audio_loaded = false;
@@ -170,9 +239,8 @@ function deactivate(audio, video) {
 
 function activate(audio, video, audioctx, media) {
   clearInterval(fadeOutIntervalId);
-  if (fade_out_audio !== null) {
-    fade_out_audio.pause();
-  }
+  // if (fade_out_audio !== null) { fade_out_audio.pause() }
+  global_audio_pause();
   audio.volume = 0.5;
   analyse_audio(audioctx, media);
   audio.play();
@@ -230,13 +298,26 @@ function rand_int(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function global_audio_pause() {
+  for (let i = 0; i < audio_elements.length; i++) {
+    const audio = audio_elements[i];
+    audio.pause();
+  }
+}
+function global_video_pause() {
+  for (let i = 0; i < video_elements.length; i++) {
+    const video = video_elements[i];
+    video.pause();
+  }
+}
+
 let fadeOutIntervalId = null;
 let fade_out_audio = null;
 function fadeOutAudio(audio) {
-  fade_out_audio = audio;
+  // fade_out_audio = audio
   if (!audio.paused) {
-    const fadeOutInterval = 10; // Time interval for volume reduction (in milliseconds)
-    const fadeOutDuration = 300; // Total duration of the fade-out effect (in milliseconds)
+    const fadeOutInterval = 1; // Time interval for volume reduction (in milliseconds)
+    const fadeOutDuration = 100; // Total duration of the fade-out effect (in milliseconds)
     const initialVolume = audio.volume;
     const steps = Math.ceil(fadeOutDuration / fadeOutInterval);
     const volumeStep = initialVolume / steps;
