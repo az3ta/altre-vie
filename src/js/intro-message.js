@@ -4,7 +4,7 @@ export class IntroMessage extends HTMLElement {
       <div 
         id="introMessage" 
         x-show="intro"
-        class="fixed top-0 left-0 z-50 flex items-center w-full h-80 sm:h-full font-bold bg-white/70 backdrop-blur "
+        class="fixed top-0 left-0 z-50 flex items-center w-full h-screen font-bold bg-white/70 backdrop-blur "
       >
         <div class="flex flex-col justify-center w-full md:w-2/3 gap-6 mx-auto h-screen p-10 pb-20">
           <h2 class=" text-rosso text-3xl sm:text-4xl md:text-5xl lg:text-6xl animate-fade animate-once animate-duration-1000 animate-delay-100 animate-ease-in animate-normal animate-fill-backwards">Benvenut!</h2>
