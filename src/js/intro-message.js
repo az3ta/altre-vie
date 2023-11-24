@@ -8,7 +8,7 @@ export class IntroMessage extends HTMLElement {
       >
         <div class="flex flex-col justify-center w-full md:w-2/3 gap-6 mx-auto h-screen p-10 pb-20">
           <h2 class=" text-rosso text-3xl sm:text-4xl md:text-5xl lg:text-6xl animate-fade animate-once animate-duration-1000 animate-delay-100 animate-ease-in animate-normal animate-fill-backwards">Benvenut!</h2>
-          <div class="flex flex-col gap-1 sm:gap-2 md:gap-4 text-lg sm:text-xl md:text-2xl text-rosso animate-fade animate-once animate-duration-1000 animate-delay-[1100ms] animate-ease-in animate-normal animate-fill-backwards overflow-auto scrollbar-hide fade">
+          <div class="flex flex-col gap-1 sm:gap-2 md:gap-4 text-lg sm:text-xl md:text-2xl text-rosso animate-fade animate-once animate-duration-1000 animate-delay-[1100ms] animate-ease-in animate-normal animate-fill-backwards overflow-scroll pb-10 scrollbar-hide">
             <p>Questo è lo spazio sonoro di un mondo chiamato Altrevie.
             <br/><br/>
             Un mondo immaginario fatto di canti, persone e linguaggi lontani.
