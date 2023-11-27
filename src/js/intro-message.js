@@ -27,7 +27,7 @@ export class IntroMessage extends HTMLElement {
           <button 
           type="button" role="button" id="entra"
           class="text-blu hover:bg-blu hover:text-white text-center w-fit px-4 text-lg sm:text-2xl md:text-3xl rounded-full  border-2 border-solid border-blu animate-fade animate-once animate-duration-1000 animate-delay-[2100ms] animate-ease-in animate-normal animate-fill-backwards"
-          onclick="init()"
+          onclick="init()" @click="intro = false"
           >
           ENTRA
           </button>
