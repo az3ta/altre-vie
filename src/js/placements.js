@@ -1,11 +1,11 @@
 const placements = [
   {
     audio: './media/audio/AQUILA.mp3',
-    animation: './media/animations_webm/AQUILA.webm',
+    animation: './media/animations_webm/output-1.mov',
   },
   {
     audio: './media/audio/CITTA.mp3',
-    animation: './media/animations_webm/CITTA.webm',
+    animation: './media/animations_webm/output-1.mov',
   },
   {
     audio: './media/audio/COCCINELLE.mp3',
