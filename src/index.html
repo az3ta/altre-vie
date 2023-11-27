@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
 
-  <seo-content></seo-content>
+    <seo-content></seo-content>
 
-  <link href="css/styles.css" rel="stylesheet">
-  <link href="css/map.css" rel="stylesheet">
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/map.css" rel="stylesheet" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
 
-  <!-- <script src="https://unpkg.com/freezeframe/dist/freezeframe.min.js"></script> -->
-  <!-- <script src="https://unpkg.com/freezeframe/dist/freezeframe.min.js"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/addons/p5.sound.min.js"></script>
-  <script type="module" src="js/app.js"></script>
-  <script defer src="js/placements.js"></script>
-  <script defer src="js/map.js"></script>
-  <script defer src="js/audio_viz.js"></script>
-  
-</head>
-<body 
-  class="font-sans" 
-  x-data="{ intro: true, about: false }"
+    <!-- <script src="https://unpkg.com/freezeframe/dist/freezeframe.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/freezeframe/dist/freezeframe.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/addons/p5.sound.min.js"></script>
+    <script type="module" src="js/app.js"></script>
+    <script defer src="js/placements.js"></script>
+    <script defer src="js/map.js"></script>
+    <script defer src="js/audio_viz.js"></script>
+  </head>
+  <body
+    class="font-sans"
+    x-data="{ intro: false, about: false }"
   >
-  
-  <site-header></site-header>
-  <intro-message></intro-message>
-  <div id="p5"></div>
-  <main class="w-screen h-screen">
-    <about-section></about-section>
-    <div class="map-container scrollbar-hide">
-
-    </div>
-  </main>
-
-</body>
-
+    <site-header></site-header>
+    <intro-message></intro-message>
+    <div id="p5"></div>
+    <main class="w-screen h-screen">
+      <about-section></about-section>
+      <div class="map-container scrollbar-hide"></div>
+    </main>
+  </body>
 </html>
