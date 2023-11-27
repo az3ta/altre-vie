@@ -1,4 +1,6 @@
-const map_container = document.querySelector(".map-container");
+const map_container = document.querySelector(
+  ".map-container"
+);
 let device = false;
 if (
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -12,7 +14,8 @@ if (
   console.log("laptop");
 }
 
-const bounds = map_container.getBoundingClientRect(map_container);
+const bounds =
+  map_container.getBoundingClientRect(map_container);
 
 // Get the dimensions of the container and the viewport
 const containerWidth = bounds.width;
@@ -63,13 +66,20 @@ async function loadAudioAndAnimation(index) {
     animation.src = animationFile;
     animation.controls = false; // Add controls to play the animation
     animation.autoplay = false; // Set autoplay as per your needs
+    animation.muted = true;
     animation.loop = true;
+    animation.playsInline = true; // Set the playsinline attribute
+
     animation.onloadeddata = () => {
       // console.log(`${animationFile}, loaded`);
       loaded_items++;
-      console.log(loaded_items, loaded_items === placements.length);
+      console.log(
+        loaded_items,
+        loaded_items === placements.length
+      );
       if (loaded_items === placements.length) {
-        const intro = document.querySelector("#introMessage");
+        const intro =
+          document.querySelector("#introMessage");
         intro.style.display = "none";
       }
     };
@@ -79,10 +89,16 @@ async function loadAudioAndAnimation(index) {
 
     const audioContext = new (window.AudioContext ||
       window.webkitAudioContext)();
-    const media = audioContext.createMediaElementSource(audio);
+    const media =
+      audioContext.createMediaElementSource(audio);
 
     if (!device) {
-      processAudioAndAnimation(audio, audioContext, media, animation);
+      processAudioAndAnimation(
+        audio,
+        audioContext,
+        media,
+        animation
+      );
       element_placement(media_container, animation);
     } else {
       processAudioAndAnimation_mobile(
@@ -95,7 +111,9 @@ async function loadAudioAndAnimation(index) {
       element_placement_mobile(media_container, animation);
     }
     if (index < placements.length - 1) {
-      const perc = Math.round((index / placements.length) * 100);
+      const perc = Math.round(
+        (index / placements.length) * 100
+      );
       console.log(`loaded ${perc}%`);
       loadAudioAndAnimation(index + 1);
     } else {
@@ -130,7 +148,12 @@ function processAudioAndAnimation_mobile(
   observer.observe(media_container);
 }
 
-function processAudioAndAnimation(audio, audioctx, media, video) {
+function processAudioAndAnimation(
+  audio,
+  audioctx,
+  media,
+  video
+) {
   if (!device) {
     video.addEventListener("mouseover", (e) => {
       activate(audio, video, audioctx, media);
@@ -180,7 +203,8 @@ function activate(audio, video, audioctx, media) {
 }
 
 function element_placement_mobile(media_div) {
-  media_div.style.width = rand_int(150, windowWidth - 50) + "px";
+  media_div.style.width =
+    rand_int(150, windowWidth - 50) + "px";
   media_div.style.maxHeight = "500px";
   map_container.appendChild(media_div);
 }
@@ -191,9 +215,16 @@ function element_placement(media_div) {
   let overlap;
   do {
     randomX =
-      50 + Math.floor(Math.random() * (containerWidth - (imageWidth + 50)));
+      50 +
+      Math.floor(
+        Math.random() * (containerWidth - (imageWidth + 50))
+      );
     randomY =
-      150 + Math.floor(Math.random() * (containerHeight - (imageHeight + 200)));
+      150 +
+      Math.floor(
+        Math.random() *
+          (containerHeight - (imageHeight + 200))
+      );
     attempts++;
 
     // Check if the generated coordinates overlap with existing images
@@ -216,7 +247,9 @@ function element_placement(media_div) {
   } while (overlap && attempts < maxAttempts);
 
   if (attempts >= maxAttempts) {
-    console.log("Failed to place an image without overlapping.");
+    console.log(
+      "Failed to place an image without overlapping."
+    );
   } else {
     media_div.style.left = `${randomX}px`;
     media_div.style.top = `${randomY}px`;
@@ -238,7 +271,9 @@ function fadeOutAudio(audio) {
     const fadeOutInterval = 10; // Time interval for volume reduction (in milliseconds)
     const fadeOutDuration = 300; // Total duration of the fade-out effect (in milliseconds)
     const initialVolume = audio.volume;
-    const steps = Math.ceil(fadeOutDuration / fadeOutInterval);
+    const steps = Math.ceil(
+      fadeOutDuration / fadeOutInterval
+    );
     const volumeStep = initialVolume / steps;
     let step = 0;
     fadeOutIntervalId = setInterval(() => {
