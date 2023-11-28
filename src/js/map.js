@@ -88,8 +88,8 @@ async function loadAudioAndAnimation(index) {
       animation.type = "video/webm";
     } else {
       // Default to MP4 for other browsers.
-      animation.src = animationFileWebm;
-      animation.type = "video/webm";
+      animation.src = animationFileMov;
+      animation.type = "video/quicktime";
     }
 
     animation.controls = false; // Add controls to play the animation
