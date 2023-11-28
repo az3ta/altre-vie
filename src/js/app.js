@@ -1,7 +1,7 @@
-import { IntroMessage } from "./intro-message.js";
-import { SiteHeader } from "./site-header.js";
-import { AboutSection } from "./about-section.js";
-import { SeoContent } from "./seo-content.js";
+import { IntroMessage } from "./html-components/intro-message.js";
+import { SiteHeader } from "./html-components/site-header.js";
+import { AboutSection } from "./html-components/about-section.js";
+import { SeoContent } from "./html-components/seo-content.js";
 
 customElements.define("intro-message", IntroMessage);
 customElements.define("site-header", SiteHeader);

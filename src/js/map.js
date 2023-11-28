@@ -40,17 +40,16 @@ const placedCoordinates = new Set();
 
 function init() {
   loadAudioAndAnimation(0);
-  const button = document.querySelector("#entra");
-  button.textContent = "LOADING...";
 }
 
 let loaded_items = 0;
 let data_loaded = false;
-console.log(placements.length);
+/* console.log(placements.length); */
 
 async function loadAudioAndAnimation(index) {
   const audioFile = placements[index].audio;
-  const animationFile = placements[index].animation;
+  const animationFileMov = placements[index].animationMov;
+  const animationFileWebm = placements[index].animationWebm;
   const media_container = document.createElement("div");
   media_container.classList.add("media-container");
 
@@ -62,13 +61,64 @@ async function loadAudioAndAnimation(index) {
       // console.log(`${audioFile}, lodade`);
     };
     // Create a video element for the animation
+
     const animation = document.createElement("video");
-    animation.src = animationFile;
+
+    // Check the browser type.
+    var isChrome =
+      !!window.chrome &&
+      (!!window.chrome.webstore || !!window.chrome.runtime);
+    var isFirefox = typeof InstallTrigger !== "undefined";
+    var isSafari =
+      /constructor/i.test(window.HTMLElement) ||
+      (function (p) {
+        return (
+          p.toString() ===
+          "[object SafariRemoteNotification]"
+        );
+      })(!window["safari"] || safari.pushNotification);
+
+    if (isSafari || isChrome) {
+      // Safari or Chrome.
+      animation.src = animationFileMov;
+      animation.type = "video/quicktime";
+    } else if (isFirefox) {
+      // Firefox.
+      animation.src = animationFileWebm;
+      animation.type = "video/webm";
+    } else {
+      // Default to MP4 for other browsers.
+      animation.src = animationFileWebm;
+      animation.type = "video/webm";
+    }
+
     animation.controls = false; // Add controls to play the animation
     animation.autoplay = false; // Set autoplay as per your needs
     animation.muted = true;
     animation.loop = true;
     animation.playsInline = true; // Set the playsinline attribute
+
+    /* const animation = document.createElement("video");
+    animation.src = animationFile;
+    animation.type = "video/mp4";
+    animation.controls = false; // Add controls to play the animation
+    animation.autoplay = false; // Set autoplay as per your needs
+    animation.muted = true;
+    animation.loop = true;
+    animation.playsInline = true; // Set the playsinline attribute */
+    /*  const animation = document.createElement("video");
+    const source = document.createElement("source");
+
+    source.src = animationFile;
+    source.type = "video/mp4";
+
+    animation.appendChild(source);
+
+    animation.controls = false; // Add controls to play the animation
+    animation.autoplay = false; // Set autoplay as per your needs
+    animation.muted = true;
+    animation.loop = true;
+    animation.playsInline = true; // Set the playsinline attribute */
 
     animation.onloadeddata = () => {
       // console.log(`${animationFile}, loaded`);
