@@ -57,8 +57,10 @@ async function loadAudioAndAnimation(index) {
     const audio = new Audio();
     audio.src = audioFile;
     audio.loop = true;
+    // audio.muted = true
+    // audio.controls = true
     audio.onloadeddata = () => {
-      // console.log(`${audioFile}, lodade`);
+      console.log(`${audioFile}, lodaded`);
     };
     // Create a video element for the animation
 
@@ -137,10 +139,12 @@ async function loadAudioAndAnimation(index) {
     media_container.appendChild(animation);
     media_container.appendChild(audio);
 
-    const audioContext = new (window.AudioContext ||
-      window.webkitAudioContext)();
-    const media =
-      audioContext.createMediaElementSource(audio);
+    // const audioContext = new (window.AudioContext ||
+    //   window.webkitAudioContext)();
+    // const media =
+    //   audioContext.createMediaElementSource(audio);
+    const audioContext = null
+    const media = null
 
     if (!device) {
       processAudioAndAnimation(
@@ -247,7 +251,7 @@ function activate(audio, video, audioctx, media) {
     fade_out_audio.pause();
   }
   audio.volume = 0.5;
-  analyse_audio(audioctx, media);
+  // analyse_audio(audioctx, media);
   audio.play();
   video.play();
 }
@@ -273,7 +277,7 @@ function element_placement(media_div) {
       150 +
       Math.floor(
         Math.random() *
-          (containerHeight - (imageHeight + 200))
+        (containerHeight - (imageHeight + 200))
       );
     attempts++;
 
