@@ -1,4 +1,6 @@
-const map_container = document.querySelector(".map-container");
+const map_container = document.querySelector(
+  ".map-container"
+);
 let device = false;
 if (
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -12,7 +14,8 @@ if (
   console.log("laptop");
 }
 
-const bounds = map_container.getBoundingClientRect(map_container);
+const bounds =
+  map_container.getBoundingClientRect(map_container);
 
 // Get the dimensions of the container and the viewport
 const containerWidth = bounds.width;
@@ -44,7 +47,9 @@ function init() {
   // const button = document.querySelector('#entra')
   // button.textContent = 'LOADING...'
 
-  const media_elements = document.querySelectorAll(".media-container");
+  const media_elements = document.querySelectorAll(
+    ".media-container"
+  );
   for (let i = 0; i < media_elements.length; i++) {
     const media = media_elements[i];
     const video = media.querySelector("video");
@@ -52,7 +57,8 @@ function init() {
     console.log(video, audio);
     const audioContext = new (window.AudioContext ||
       window.webkitAudioContext)();
-    const media_el = audioContext.createMediaElementSource(audio);
+    const media_el =
+      audioContext.createMediaElementSource(audio);
     if (!device) {
       video.addEventListener("mouseover", (e) => {
         activate(audio, video, audioContext, media_el);
@@ -62,7 +68,8 @@ function init() {
         deactivate(audio, video);
       });
     } else {
-      media.style.width = rand_int(150, window.innerWidth - 50) + "px";
+      media.style.width =
+        rand_int(150, window.innerWidth - 50) + "px";
       media.style.maxHeight = "500px";
       media.style.left = "0px";
       media.style.top = "0px";
@@ -71,17 +78,25 @@ function init() {
         rootMargin: "0px", // No margin
         threshold: 0.95, // When at least 50% of the target is visible
       };
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            console.log("activate");
-            activate(audio, video, audioContext, media_el);
-          } else {
-            console.log("deactivate");
-            deactivate(audio, video);
-          }
-        });
-      }, observerOptions);
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              console.log("activate");
+              activate(
+                audio,
+                video,
+                audioContext,
+                media_el
+              );
+            } else {
+              console.log("deactivate");
+              deactivate(audio, video);
+            }
+          });
+        },
+        observerOptions
+      );
       observer.observe(media);
     }
   }
@@ -123,6 +138,7 @@ async function loadAudioAndAnimation(index) {
     animation.setAttribute("muted", "true");
     animation.controls = false; // Add controls to play the animation
     animation.loop = true;
+    animation.style.mixBlendMode = "multiply";
     animation.onprogress = (event) => {
       // console.log(event);
     };
@@ -143,10 +159,16 @@ async function loadAudioAndAnimation(index) {
 
     const audioContext = new (window.AudioContext ||
       window.webkitAudioContext)();
-    const media = audioContext.createMediaElementSource(audio);
+    const media =
+      audioContext.createMediaElementSource(audio);
 
     if (!device) {
-      processAudioAndAnimation(audio, audioContext, media, animation);
+      processAudioAndAnimation(
+        audio,
+        audioContext,
+        media,
+        animation
+      );
       element_placement(media_container, animation);
     } else {
       processAudioAndAnimation_mobile(
@@ -192,7 +214,12 @@ function processAudioAndAnimation_mobile(
   observer.observe(media_container);
 }
 
-function processAudioAndAnimation(audio, audioctx, media, video) {
+function processAudioAndAnimation(
+  audio,
+  audioctx,
+  media,
+  video
+) {
   if (!device) {
     video.addEventListener("mouseover", (e) => {
       activate(audio, video, audioctx, media);
@@ -248,7 +275,8 @@ function activate(audio, video, audioctx, media) {
 }
 
 function element_placement_mobile(media_div) {
-  media_div.style.width = rand_int(150, windowWidth - 50) + "px";
+  media_div.style.width =
+    rand_int(150, windowWidth - 50) + "px";
   media_div.style.maxHeight = "500px";
   map_container.appendChild(media_div);
 }
@@ -259,9 +287,16 @@ function element_placement(media_div) {
   let overlap;
   do {
     randomX =
-      50 + Math.floor(Math.random() * (containerWidth - (imageWidth + 50)));
+      50 +
+      Math.floor(
+        Math.random() * (containerWidth - (imageWidth + 50))
+      );
     randomY =
-      150 + Math.floor(Math.random() * (containerHeight - (imageHeight + 200)));
+      150 +
+      Math.floor(
+        Math.random() *
+          (containerHeight - (imageHeight + 200))
+      );
     attempts++;
 
     // Check if the generated coordinates overlap with existing images
@@ -284,7 +319,9 @@ function element_placement(media_div) {
   } while (overlap && attempts < maxAttempts);
 
   if (attempts >= maxAttempts) {
-    console.log("Failed to place an image without overlapping.");
+    console.log(
+      "Failed to place an image without overlapping."
+    );
   } else {
     media_div.style.left = `${randomX}px`;
     media_div.style.top = `${randomY}px`;
@@ -319,7 +356,9 @@ function fadeOutAudio(audio) {
     const fadeOutInterval = 1; // Time interval for volume reduction (in milliseconds)
     const fadeOutDuration = 100; // Total duration of the fade-out effect (in milliseconds)
     const initialVolume = audio.volume;
-    const steps = Math.ceil(fadeOutDuration / fadeOutInterval);
+    const steps = Math.ceil(
+      fadeOutDuration / fadeOutInterval
+    );
     const volumeStep = initialVolume / steps;
     let step = 0;
     fadeOutIntervalId = setInterval(() => {

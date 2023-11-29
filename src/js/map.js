@@ -98,6 +98,7 @@ async function loadAudioAndAnimation(index) {
     animation.autoplay = false; // Set autoplay as per your needs
     animation.muted = true;
     animation.loop = true;
+    animation.style.mixBlendMode = "multiply";
     animation.playsInline = true; // Set the playsinline attribute
 
     /* const animation = document.createElement("video");
@@ -143,8 +144,8 @@ async function loadAudioAndAnimation(index) {
     //   window.webkitAudioContext)();
     // const media =
     //   audioContext.createMediaElementSource(audio);
-    const audioContext = null
-    const media = null
+    const audioContext = null;
+    const media = null;
 
     if (!device) {
       processAudioAndAnimation(
@@ -277,7 +278,7 @@ function element_placement(media_div) {
       150 +
       Math.floor(
         Math.random() *
-        (containerHeight - (imageHeight + 200))
+          (containerHeight - (imageHeight + 200))
       );
     attempts++;
 
