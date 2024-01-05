@@ -70,7 +70,9 @@ async function loadAudioAndAnimation(index) {
     var isChrome =
       !!window.chrome &&
       (!!window.chrome.webstore || !!window.chrome.runtime);
-    var isFirefox = typeof InstallTrigger !== "undefined";
+    // var isFirefox = typeof InstallTrigger !== "undefined";
+    var isFirefox = navigator.userAgent.indexOf("Firefox") != -1;
+    console.log(isFirefox);
     var isSafari =
       /constructor/i.test(window.HTMLElement) ||
       (function (p) {
@@ -85,6 +87,7 @@ async function loadAudioAndAnimation(index) {
       animation.src = animationFileMov;
       animation.type = "video/quicktime";
     } else if (isFirefox) {
+      console.log('is firefoooooooooooooooooooooooooooooooooooooooooooooooooooooox');
       // Firefox.
       animation.src = animationFileWebm;
       animation.type = "video/webm";
@@ -92,6 +95,9 @@ async function loadAudioAndAnimation(index) {
       // Default to MP4 for other browsers.
       animation.src = animationFileMov;
       animation.type = "video/quicktime";
+      // console.log('last if else');
+      // animation.src = animationFileWebm;
+      // animation.type = "video/webm";
     }
 
     animation.controls = false; // Add controls to play the animation
